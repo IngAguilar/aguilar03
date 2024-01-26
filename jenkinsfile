@@ -15,16 +15,6 @@ node {
             sh 'npm test'
         }
     }
-
-    stage('Docker Build & Push') {
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
-            def nuestraapp = docker.build("norman404/nodenewapp:${gitcommit}", ".")
-            nuestraapp.push()
-        }
-    }
-
-    stage('Update & Deploy') {
-        sh "sed -i 's/<IMAGE_TAG>/${gitcommit}/g' Deployment.yaml"
-        sh "kubectl apply -f Deployment.yaml"
-    }
+  
+   
 }
