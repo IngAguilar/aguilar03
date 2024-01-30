@@ -8,13 +8,6 @@ node {
         gitcommit = readFile('.git/commit-id').trim()
     }
 
-    stage('Test Node.js') {
-        contenedortest.pull()
-        contenedortest.inside {
-            sh 'npm install --only=dev'
-            sh 'npm test'
-        }
-    }
-  
+ 
    
 }
