@@ -34,7 +34,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: knodeapp-ingress
-  annotation:
+  annotations:
     cert-manager.io/issuer: letsencrypt-nginx
 spec:
   ingressClassName: nginx
