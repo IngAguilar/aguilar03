@@ -39,9 +39,9 @@ metadata:
 spec:
   ingressClassName: nginx
   tls:
-    - hosts:
-      - aguachile.molcajete.dev
-      secretName: letsencrypt-ngnix
+  - hosts:
+    - aguachile.molcajete.dev
+    secretName: letsencrypt-ngnix
   rules:
   - host: aguachile.molcajete.dev
     http:
