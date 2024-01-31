@@ -65,7 +65,7 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - demo.knodeapp.molcajete.dev
+    - demo.aguachile.molcajete.dev
     secretName: letsencrypt-nginx
   rules:
   - host: demo.aguachile.molcajete.dev
