@@ -34,8 +34,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: knodeapp-ingress
+  annotation:
+    cert-manager.io/issuer: letsencrypt-nginx
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+      - aguachile.molcajete.dev
+      secretName: letsencrypt-ngnix
   rules:
   - host: aguachile.molcajete.dev
     http:
