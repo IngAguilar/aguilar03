@@ -1,9 +1,15 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: devops
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: knodeapp
+  namespace: devops 
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: knodeapp
@@ -18,10 +24,28 @@ spec:
         ports:
           - containerPort: 3000
 ---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-nginx
+  namespace: devops
+spec:
+  acme:
+    email: luis@demo.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-nginx-private-key
+    solvers:
+      # Use the HTTP-01 challenge provider
+      - http01:
+          ingress:
+            class: nginx
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: knodeapp-service
+  namespace: devops
 spec:
   type: ClusterIP
   ports:
@@ -34,18 +58,19 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: knodeapp-ingress
+  namespace: devops
   annotations:
     cert-manager.io/issuer: letsencrypt-nginx
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - aguachile.molcajete.dev
-    secretName: letsencrypt-ngnix
+    - demo.knodeapp.molcajete.dev
+    secretName: letsencrypt-nginx
   rules:
-  - host: aguachile.molcajete.dev
+  - host: demo.aguachile.molcajete.dev
     http:
-      paths: 
+      paths:
       - path: /
         pathType: Prefix
         backend:
@@ -53,4 +78,3 @@ spec:
             name: knodeapp-service
             port:
               number: 3000
-      
