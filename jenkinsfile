@@ -25,7 +25,7 @@ node {
     stage('Update & Deploy'){
         sh "sed -i 's/<IMAGE_TAG>/${gitcommit}/g' Deployment.yaml"
         sh 'kubectl apply -f Deployment.yaml'
-        sh "kubectl rollout restart deployment/knodeapp"
+        sh "kubectl rollout restart deployment/knodeapp -n devops"
     }
 
 
